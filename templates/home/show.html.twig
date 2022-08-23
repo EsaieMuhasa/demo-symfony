@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block body %}
+<p>Par <em>{{ news.author }}</em>. le {{ news.formatedRecordDate }}</p>
+<h1>{{ news.title }}</h1>
+
+{% endblock %}
