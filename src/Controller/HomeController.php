@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\NewsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,19 +12,30 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class HomeController extends AbstractController
 {
-    #[Route(path:'/', name: 'app_home')]
+
+    private NewsRepository $newsRepository;
+
+
+    public function __construct(NewsRepository $newsRepository)
+    {
+        $this->newsRepository = $newsRepository;
+    }
+
+    #[Route(path:'/', name: 'home.index')]
     public function index(): Response
     {
+        $news = $this->newsRepository->findAll();
         return $this->render('home/index.html.twig', [
             'title' => 'mon site bidon des news',
-            'pageH1' => 'Liste des news'
+            'pageH1' => 'Liste des news',
+            'news' => $news
         ]);
     }
 
     /**
      * show news full description
      */
-    #[Route(path:'/news-{id}/', name:'show_news')]
+    #[Route(path:'/news-{id}/', name:'home.show')]
     public function show (int $id) : Response {
 
         return $this->render('show.html.twig',[

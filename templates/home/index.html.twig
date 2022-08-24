@@ -4,4 +4,8 @@
 
 {% block body %}
 <h1>Liste de news {{ pageH1 }}</h1>
+{% for n in news %}
+    <h2><a href="{{ path('home.show', {id : n.id}) }}">{{n.title}}</a></h2>
+    <p>{{n.content | nl2br}}</p>
+{% endfor %}
 {% endblock %}
