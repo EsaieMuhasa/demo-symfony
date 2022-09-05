@@ -69,8 +69,11 @@ class News
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getContent(int $ln = 0): ?string
     {
+        if($ln != 0 && strlen($this->content) < $ln) {
+            return substr($this->content, 0, $ln);
+        }
         return $this->content;
     }
 
