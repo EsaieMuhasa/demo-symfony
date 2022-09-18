@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\NewsRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -69,24 +70,32 @@ class News
         return $this;
     }
 
-    public function getContent(int $ln = 0): ?string
+    public function getContent(): ?string
     {
-        if($ln != 0 && strlen($this->content) < $ln) {
-            return substr($this->content, 0, $ln);
-        }
         return $this->content;
     }
 
     public function setContent(string $content): self
     {
         $this->content = $content;
-
+        
         return $this;
+    }
+    
+    public function getSubContent(int $ln = 100) : ?string {
+        return substr($this->content, 0, $ln)."...";
     }
 
     public function getRecordingDate(): ?\DateTimeInterface
     {
         return $this->recordingDate;
+    }
+
+    public function getFormatedRecordingDate() : string{
+        if($this->recordingDate != null) {
+            return $this->recordingDate->format('d/m/Y \à H\h:i');
+        }
+        return '';
     }
 
     public function setRecordingDate(\DateTimeInterface $recordingDate): self
@@ -109,6 +118,27 @@ class News
     }
 
     /**
+     * return formate date for last update, as string
+     *
+     * @return string
+     */
+    public function getFormatedLastUpdateDate () : string {
+        if($this->lastUpdateDate  != null) {
+            return $this->lastUpdateDate->format('d/m/Y \à H\h:i');
+        }
+        return '-';
+    }
+
+    /**
+     * renvoie le slug du news
+     *
+     * @return string
+     */
+    public function getSlug () : string {
+        return (new Slugify())->slugify($this->title);
+    }
+
+    /**
      * @return Collection<int, Comment>
      */
     public function getComments(): Collection
@@ -124,6 +154,15 @@ class News
         }
 
         return $this;
+    }
+
+    /**
+     * check when news has comments
+     *
+     * @return boolean
+     */
+    public function hasComments() : bool {
+        return $this->comments !== null && !$this->comments->isEmpty();
     }
 
     public function removeComment(Comment $comment): self

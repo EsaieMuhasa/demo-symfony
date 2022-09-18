@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration du site bidon - liste des news disponible!{% endblock %}
+
+{% block body %}
+
+<p style="text-align: center">
+	<strong> 
+	Il y a actuellement {{countNews}}{{ countNews > 1? 's':''}}. 
+	{% if countNews != 0 %}
+	En voici la liste:
+    {% endif %}
+	</strong>
+</p>
+{% if countNews != 0 %}
+<table>
+	<tr>
+		<th>Auteur</th>
+		<th>Titre</th>
+		<th>Date d'ajout</th>
+		<th>Dernière Modification</th>
+		<th>Action</th>
+	</tr>
+	{% for news in listNews %}    
+	<tr>
+		<td>{{news.author}}</td>
+		<td>{{news.title}}</td>
+		<td>{{news.formatedRecordingDate}}</td>
+		<td>{{news.formatedLastUpdateDate}}</td>
+		<td>
+			<a href="{{ path('admin.updateNews', {id : news.id, slug : news.slug}) }}">
+				<img alt="Modifier" src="/images/update.png">
+			</a>
+			<a href="{{ path('admin.deleteNews', {id : news.id, slug : news.slug}) }}">
+				<img alt="Supprimer" src="/images/delete.png">
+			</a>
+		</td>
+	</tr>
+    {% endfor %}
+</table>
+
+<div class="pagination">
+{% for i in 0..countNews %}
+    <a href="{{ path('admin.index', {offset : i}) }}" style = "{{currentPage == i? 'color:#FF0000;':''}}">
+        page {{ i }}
+    </a>
+{% endfor %}
+</div>
+
+{% endif %}
+{% endblock %}
+

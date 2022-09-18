@@ -21,26 +21,30 @@ class HomeController extends AbstractController
         $this->newsRepository = $newsRepository;
     }
 
-    #[Route(path:'/', name: 'home.index')]
-    public function index(): Response
+    #[Route(path:'/{offset<\d+>?0}', name: 'home.index')]
+    public function index(int $offset): Response
     {
-        $news = $this->newsRepository->findAll();
+        $news = $this->newsRepository->findAll(10, $offset * 10);
+        $count = $this->newsRepository->countAll();
         return $this->render('home/index.html.twig', [
             'title' => 'mon site bidon des news',
             'pageH1' => 'Liste des news',
-            'news' => $news
+            'news' => $news,
+            'newsCount' => $count / 10,
+            'currentPage' => $offset
         ]);
     }
 
     /**
      * show news full description
      */
-    #[Route(path:'/news-{id}/', name:'home.show')]
+    #[Route(path:'/news-{id}-{slug}', name:'home.show')]
     public function show (int $id) : Response {
+        $news = $this->newsRepository->findOneBy(['id' => $id]);
 
-        return $this->render('show.html.twig',[
-            'news' =>null,
-            'title' => '',
+        return $this->render('home/show.html.twig',[
+            'news' =>$news,
+            'title' => "{$news->getTitle()} - Site bidon",
             'comments' => ''
         ]);;
     }

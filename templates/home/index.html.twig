@@ -5,7 +5,15 @@
 {% block body %}
 <h1>Liste de news {{ pageH1 }}</h1>
 {% for n in news %}
-    <h2><a href="{{ path('home.show', {id : n.id}) }}">{{n.title}}</a></h2>
-    <p>{{n.getContent(150) | nl2br}}</p>
+    <h2><a href="{{ path('home.show', {id : n.id, slug : n.slug}) }}">{{n.title}}</a></h2>
+    <p>{{n.getSubContent(200) }}</p>
 {% endfor %}
+
+<div class="pagination">
+{% for i in 0..newsCount %}
+    <a href="{{ path('home.index', {offset : i}) }}" style = "{{currentPage == i? 'color:#FF0000;':''}}">
+        page {{ i }}
+    </a>
+{% endfor %}
+</div>
 {% endblock %}

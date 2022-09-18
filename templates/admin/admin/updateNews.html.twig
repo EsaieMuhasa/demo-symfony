@@ -1,0 +1,8 @@
+{% extends "base.html.twig" %}
+
+{% block title %} mis en jour du news - {{news.title}} - site bidon{% endblock %}
+
+{% block body %}    
+<h2>Formulaire de mis en jours d'un news</h2>
+{% include "admin/admin/_newsForm.html.twig" with {button : 'Sauvegarder les modifications'} %}
+{% endblock %}

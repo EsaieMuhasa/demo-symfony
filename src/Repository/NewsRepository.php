@@ -39,6 +39,41 @@ class NewsRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * selection d'une partie des occurences de la dite table
+     *
+     * @param int $limit
+     * @param int $offset
+     * @return News[]
+     */
+    public function findAll (int $limit = 0, int $offset = 0) : array {
+        return $this->createQueryBuilder('n')
+            ->orderBy('n.id', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit == 0? 6 : $limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * comptage des touts les occurences dans la base de donnees
+     *
+     * @return int
+     */
+    public function countAll () : int {
+        return $this->count([]);
+    }
+
+    /**
+     * selection du news dont l'id est en parametre
+     *
+     * @param int $id
+     * @return News
+     */
+    public function findById (int $id) : News {
+        return $this->findOneBy(['id' => $id]);
+    }
+
 //    /**
 //     * @return News[] Returns an array of News objects
 //     */

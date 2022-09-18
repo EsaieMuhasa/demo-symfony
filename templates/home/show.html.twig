@@ -3,7 +3,17 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block body %}
-<p>Par <em>{{ news.author }}</em>. le {{ news.formatedRecordDate }}</p>
+<p>Par <em>{{ news.author }}</em>. le {{ news.formatedRecordingDate }}</p>
 <h1>{{ news.title }}</h1>
+<p style = "text-align: justify;">{{ news.content | nl2br}}</p>
+{% if news.lastUpdateDate %}   
+    <p style="text-align: right;"><small><em>{{news.formatedLastUpdateDate}}</em></small></p>
+{% endif %}
 
+{% if (news.hasComments()) %}
+    <p>Auncun commentaire n'a encore été posté. Soyez le premier à en laiser un !</p>
+{% endif %}
+{% for comment in news.comments %}
+    
+{% endfor %}
 {% endblock %}
