@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route(path:'/admin')]
 class AdminController extends AbstractController
 {
     private NewsRepository $newsRepository;
@@ -23,7 +24,7 @@ class AdminController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route(path : '/admin/{offset<\d+>?0}', name: 'admin.index')]
+    #[Route(path : '/{offset<\d+>?0}', name: 'admin.index')]
     public function index(int $offset): Response
     {
         $countNews = $this->newsRepository->countAll();
@@ -32,11 +33,12 @@ class AdminController extends AbstractController
         return $this->render('admin/admin/index.html.twig', [
             'countNews' => $countNews / 10,
             'listNews' => $listNews,
-            'currentPage' => $offset
+            'currentPage' => $offset,
+            'navItem' => 'admin.index'
         ]);
     }
 
-    #[Route(path:'/admin/insert-news', name:'admin.insertNews')]
+    #[Route(path:'/insert-news', name:'admin.insertNews')]
     public function insertNews (Request $request) : Response {
         $news = new News();
         $news->setAuthor("Ing. Esaie MUHASA");
@@ -52,11 +54,12 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/admin/insertNews.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'navItem' => 'admin.insertNews'
         ]);
     }
 
-    #[Route(path : "/admin/news-{id<\d+>}-{slug}/update", name:"admin.updateNews")]
+    #[Route(path : "/news-{id<\d+>}-{slug}/update", name:"admin.updateNews")]
     public function updateNews (int $id, string $slug, Request $request) : Response {
         $news = $this->newsRepository->findById($id);
         $form = $this->createForm(NewsType::class, $news);
@@ -74,7 +77,7 @@ class AdminController extends AbstractController
         ]);
     }
     
-    #[Route(path : "/admin/news-{id<\d+>}-{slug}/delete", name:"admin.deleteNews")]
+    #[Route(path : "/news-{id<\d+>}-{slug}/delete", name:"admin.deleteNews")]
     public function deleteNews (int $id, string $slug) : Response {
         
         return $this->redirectToRoute('admin.inde');

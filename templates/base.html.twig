@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <link rel="icon" type="image/png" href="/logo.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title>{% block title %}Site bidon!{% endblock %}</title>
+        <title>{% block title %}Site bidon{% endblock %}</title>
         <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css"/>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -25,10 +25,12 @@
     		
     		<nav id="menu">
     			<ul>
-                    <li><a href="/" class="active">News</a></li>
-    				<li><a href="/admin/" class="">Admin</a></li>
-    				<li><a href="/admin/insert-news" class="" >Ajouter une news</a></li>
-    				<li><a href="/admin/logout">Déconnexion</a></li>
+                    <li><a href="/" class="{{ navItem == 'index' ? 'active' : '' }}">News</a></li>
+    				<li><a href="/admin/" class="{{ navItem == 'admin.index' ? 'active' : '' }}" >Admin</a></li>
+                    {% if app.user %}
+                        <li><a href="/admin/insert-news"  class="{{ navItem == 'admin.insertNews' ? 'active' : '' }}" >Ajouter une news</a></li>
+                        <li><a href="/logout">Déconnexion</a></li>
+                    {% endif %}
                 </ul>
             </nav>
             <div id="content-wrap">

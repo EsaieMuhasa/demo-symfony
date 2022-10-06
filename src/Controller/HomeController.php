@@ -29,6 +29,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'title' => 'mon site bidon des news',
             'pageH1' => 'Liste des news',
+            'navItem' => 'index',
             'news' => $news,
             'newsCount' => $count / 10,
             'currentPage' => $offset

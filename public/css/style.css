@@ -137,8 +137,11 @@ input {
 }
 
 textarea,
-input[type="text"] {
-	width: 100%;
+input[type="text"],
+input[type="password"]  {
+	display: block;
+	margin-bottom: 10px;
+	width: 98%;
 }
 
 textarea {
@@ -410,4 +413,22 @@ footer a {
 .pagination a:hover {
 	text-decoration: none;
 	background: #edf7cb;
+}
+
+.alert {
+	border-radius: 4px;
+	padding: 2px;
+	border: 1px solid transparent;
+}
+
+.alert-error {
+	border-color: #EEAAAA;
+	background-color: #FFCCCC;
+	color: #990000;
+}
+
+.alert-success {
+	border-color: #AAEEAA;
+	background-color: #CCFFCC;
+	color: #006600;
 }

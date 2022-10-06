@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Site bidon - connexion{% endblock %}
+
+{% block body %}
+    {% if error %}
+    <div class = "alert alert-error">
+        <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+    </div>
+    {% endif %}
+<h2>Connexion</h2>
+<form action="" method="POST">
+    <div>
+        <label>Pseudo</label>
+        <input type="text" value ="{{username}}" name="_username" autocomplete="off" id="login"/>
+    </div>
+    <div>
+        <label>Mot de passe</label>
+        <input type="password" name="_password" autocomplete="off" id="password"/>
+    </div>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    <br/>
+	<input class="button" type="submit" value="Connexion"/>
+</form>
+{% endblock %}
