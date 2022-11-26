@@ -6,7 +6,7 @@
 
 <p style="text-align: center">
 	<strong> 
-	Il y a actuellement {{countNews}}{{ countNews > 1? 's':''}}. 
+	Il y a actuellement {{maxNews}} new{{ countNews > 1? 's':''}}. 
 	{% if countNews != 0 %}
 	En voici la liste:
     {% endif %}

@@ -31,6 +31,7 @@ class AdminController extends AbstractController
         $listNews = $this->newsRepository->findAll(10, $offset * 10);
 
         return $this->render('admin/admin/index.html.twig', [
+            'maxNews' => $countNews,
             'countNews' => $countNews / 10,
             'listNews' => $listNews,
             'currentPage' => $offset,
