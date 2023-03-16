@@ -21,14 +21,14 @@ class ApiController extends AbstractController
 
         $data = $serializer->serialize($news, 'json');
 
-        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
+        return new JsonResponse($data, Response::HTTP_OK, [], true);
     }
 
     #[Route('/news/{id<\d+>}', name: 'api.news.show', methods:['GET'])]
     public function getNews (News $news, SerializerInterface $serializer) : Response {
         $data = $serializer->serialize($news, 'json');
 
-        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
+        return new JsonResponse($data, Response::HTTP_OK, [], true);
     }
 
     #[Route('/news/{id<\d+>}', name: 'api.news.delete', methods:['DELETE'])]
@@ -36,6 +36,6 @@ class ApiController extends AbstractController
         $entityManager->remove($news);
         $entityManager->flush();
 
-        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT, [], false);
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT, [], false);
     }
 }

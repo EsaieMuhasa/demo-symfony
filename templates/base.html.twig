@@ -3,10 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="icon" type="image/png" href="{{ asset('logo.png') }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title>{% block title %}Site bidon{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css"/>
+        <title>
+            {% block title %}Site bidon{% endblock %}
+        </title>
+{#        <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css"/>#}
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -19,17 +21,17 @@
     <body>
         <div id="wrap">
     		<header>
-    			<h1><a href="/">Un site Bidon!</a></h1>
+    			<h1><a href="{{ path('home.index', {'offset': '0'}) }}">Un site Bidon!</a></h1>
     			<p>Comment ça «il n'y a presque rien» ?</p>
     		</header>
     		
     		<nav id="menu">
     			<ul>
-                    <li><a href="/" class="{{ navItem == 'index' ? 'active' : '' }}">News</a></li>
-    				<li><a href="/admin/" class="{{ navItem == 'admin.index' ? 'active' : '' }}" >Admin</a></li>
+                    <li><a href="{{ path('home.index', {'offset': 0}) }}" class="{{ navItem == 'index' ? 'active' : '' }}">News</a></li>
+    				<li><a href="{{ path('admin.index', {'offset': 0}) }}" class="{{ navItem == 'admin.index' ? 'active' : '' }}" >Admin</a></li>
                     {% if app.user %}
-                        <li><a href="/admin/insert-news"  class="{{ navItem == 'admin.insertNews' ? 'active' : '' }}" >Ajouter une news</a></li>
-                        <li><a href="/logout">Déconnexion</a></li>
+                        <li><a href="{{ path('admin.insertNews') }}"  class="{{ navItem == 'admin.insertNews' ? 'active' : '' }}" >Ajouter une news</a></li>
+                        <li><a href="{{ path('security.logout') }}">Déconnexion</a></li>
                     {% endif %}
                 </ul>
             </nav>
